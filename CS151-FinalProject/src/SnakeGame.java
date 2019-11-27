@@ -3,6 +3,7 @@ import java.awt.Color;
 
 public class SnakeGame {
     public static void main(String[] args){
+        // Write JFrame and make a new object
         JFrame frame = new JFrame();
         SnakePlay snakePlay = new SnakePlay();
 

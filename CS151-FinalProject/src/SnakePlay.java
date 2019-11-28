@@ -34,6 +34,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
     // define the variable of the first time to move
     private int moves = 0;
 
+    // initial the variable of the score
     private int score = 0;
 
     // create variable for the futher snake body
@@ -134,15 +135,21 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
             }
         }
 
+        // draw the food image icon
         food = new ImageIcon("food.png");
 
+        // check if the food is collided with the head of snake
         if((foodXpos[xpos] == snakeXlength[0]) && foodYpos[ypos] == snakeYlength[0]){
+            // score will increment after pickup food
             score++;
+            // if the snake picks up the food icon, then the length of snake will increse
             lengthOfsanke++;
+            
+            //rearrange new position
             xpos = random.nextInt(34);
             ypos = random.nextInt(23);
         }
-        food.paintIcon(this,g,foodXpos[xpos],foodYpos[ypos]);
+        food.paintIcon(this,g,foodXpos[xpos],foodYpos[ypos]);   // print food icon image
 
         // game over check
         for(int m = 1; m < lengthOfsanke; m++){

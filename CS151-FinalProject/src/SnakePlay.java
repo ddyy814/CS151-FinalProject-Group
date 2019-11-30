@@ -145,6 +145,12 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
             // if the snake picks up the food icon, then the length of snake will increse
             lengthOfsanke++;
             
+            // if the snake  picks up the food icon, then the speed of snake will increse
+            if(delay >= 5){
+                delay -= 5;
+                timer.setDelay(delay);
+            }
+            
             //rearrange new position
             xpos = random.nextInt(34);
             ypos = random.nextInt(23);

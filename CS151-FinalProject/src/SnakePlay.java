@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
-
 
 public class SnakePlay extends JPanel implements KeyListener, ActionListener {
 
@@ -39,29 +37,17 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
 
     // create variable for the futher snake body
     private ImageIcon snakeBody;
-    
-    // Two arrays of default position for the pickup food
-    private int [] foodXpos = {25,50,75,100,125,150,175,200,225,250,275,300,325,350,375,400,
-                                425,450,475,500,525,550,575,600,625,650,675,700,725,750,775,
-                                800,825,850};
-    private int [] foodYpos = {75,100,125,150,175,200,225,250,275,300,325,350,375,400,
-                                425,450,475,500,525,550,575,600,625};
 
-    // food icon
-    private ImageIcon food;
-    // random variables for the position of pickup
-    private Random random = new Random();
-
-    // randome number of X position, X = 34 becuase there are total 34 numbers in X array
-    private int xpos = random.nextInt(34);
-    // randome number of Y position, Y = 23 becuase there are total 34 numbers in Y array
-    private int ypos = random.nextInt(23);
+    // create variable for the futher snake body
+    private Food food;
 
     // Make constructors 
     public SnakePlay(){
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
+        // draw the food image icon
+        food = new Food("food.png");
         timer = new Timer(delay, this);
         timer.start();
     }
@@ -135,21 +121,24 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
             }
         }
 
-        // draw the food image icon
-        food = new ImageIcon("food.png");
-
         // check if the food is collided with the head of snake
-        if((foodXpos[xpos] == snakeXlength[0]) && foodYpos[ypos] == snakeYlength[0]){
+        if(food.isAte(snakeXlength[0], snakeYlength[0])){
+        //if((foodXpos[xpos] == snakeXlength[0]) && foodYpos[ypos] == snakeYlength[0]){
             // score will increment after pickup food
             score++;
             // if the snake picks up the food icon, then the length of snake will increse
             lengthOfsanke++;
+
+			// if the snake picks up the food icon, then the speed of snake will increse
+			if(delay >= 5){
+            	delay -= 5;
+            	timer.setDelay(delay);
+			}
             
             //rearrange new position
-            xpos = random.nextInt(34);
-            ypos = random.nextInt(23);
+            food.randomPos();
         }
-        food.paintIcon(this,g,foodXpos[xpos],foodYpos[ypos]);   // print food icon image
+        food.paintIcon(this,g);   // print food icon image
 
         // game over check
         for(int m = 1; m < lengthOfsanke; m++){

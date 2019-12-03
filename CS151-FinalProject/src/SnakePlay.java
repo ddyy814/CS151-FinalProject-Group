@@ -131,15 +131,10 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
 
 			// if the snake picks up the food icon, then the speed of snake will increse
 			if(delay >= 5){
-            	delay -= 5;
+            	delay -= 3;
             	timer.setDelay(delay);
 			}
             
-            // if the snake  picks up the food icon, then the speed of snake will increse
-            if(delay >= 5){
-                delay -= 5;
-                timer.setDelay(delay);
-            }
             
             //rearrange new position
             food.randomPos();
@@ -154,7 +149,10 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
                 up = false;
                 down = false;
 
-                g.setColor(Color.BLUE);
+                delay = 100;
+                timer.setDelay(delay);
+                
+                g.setColor(Color.RED);
                 g.setFont(new Font("arial", Font.BOLD, 50));
                 g.drawString("Game Over",300,300);
 

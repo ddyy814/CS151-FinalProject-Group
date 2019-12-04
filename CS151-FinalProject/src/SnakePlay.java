@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -142,7 +143,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
         food.paintIcon(this,g);   // print food icon image
 
         // game over check
-        for(int m = 1; m < lengthOfsanke; m++){
+        for(int m = 4; m < lengthOfsanke; m++){
             if(snakeXlength[m] == snakeXlength[0] && snakeYlength[m] == snakeYlength[0]){
                 right = false;
                 left = false;
@@ -247,6 +248,9 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
             moves = 0;
             score = 0;
+            delay = 100;
+            timer.setDelay(delay);
+
             lengthOfsanke = 3;
             repaint();
         }

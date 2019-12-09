@@ -1,3 +1,4 @@
+package FinalProject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.event.KeyListener;
 
 public class SnakePlay extends JPanel implements KeyListener, ActionListener {
 
-    // define two arrays X and Y for exposition position 
+    // define two arrays X and Y for exposition position
     private int[] snakeXlength = new int[750];
     private int[] snakeYlength = new int[750];
     private int lengthOfsanke = 3;          //default the length of snake body
@@ -20,6 +21,8 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
     private boolean up = false;
     private boolean down = false;
 
+    private boolean gg = false;
+
     // four variables for the snake face
     private ImageIcon headRight;
     private ImageIcon headLeft;
@@ -29,7 +32,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
     // create variables for manage the speed of the snake inside a panel
     private Timer timer;
     private int delay = 100;
-    
+
     // define the variable of the first time to move
     private int moves = 0;
 
@@ -42,7 +45,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
     // create variable for the futher snake body
     private Food food;
 
-    // Make constructors 
+    // Make constructors
     public SnakePlay(){
         addKeyListener(this);
         setFocusable(true);
@@ -55,7 +58,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
 
     public void paint(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
-        
+
         if (moves == 0) {
             // if the game has started, then set the default position for the snake
             snakeXlength[2] = 50;
@@ -97,6 +100,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
        headRight = new ImageIcon("headRight.png");
        headRight.paintIcon(this,g,snakeXlength[0],snakeYlength[0]);
 
+        if(!gg){
         for(int i = 0; i < lengthOfsanke; i++) {
             // dectect the direction of the snake, right, left, up, and down
             if (i == 0 && right) {  // draw icon
@@ -120,6 +124,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
                 snakeBody = new ImageIcon("body.png");
                 snakeBody.paintIcon(this, g, snakeXlength[i], snakeYlength[i]);
             }
+          }
         }
 
         // check if the food is collided with the head of snake
@@ -135,8 +140,8 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
             	delay -= 3;
             	timer.setDelay(delay);
 			}
-            
-            
+
+
             //rearrange new position
             food.randomPos();
         }
@@ -152,7 +157,8 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
 
                 delay = 100;
                 timer.setDelay(delay);
-                
+                gg = true;
+
                 g.setColor(Color.RED);
                 g.setFont(new Font("arial", Font.BOLD, 50));
                 g.drawString("Game Over",300,300);
@@ -245,21 +251,21 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
     // To move the snake towards direction
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+        if(e.getKeyCode() == KeyEvent.VK_SPACE && gg){
             moves = 0;
             score = 0;
             delay = 100;
             timer.setDelay(delay);
-
+			gg = false;
             lengthOfsanke = 3;
             repaint();
         }
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT && !gg){
             moves++;
             right = true;
             // check if the left is not true, then keep the snake moving towrads the right direction.
             // if the left is true and the right key is pressed, then don't move towards the left direction
-            if(!left){  
+            if(!left){
                 right = true;
             }else{
                 right = false;
@@ -268,7 +274,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
             up = false;
             down = false;
         }
-        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+        if(e.getKeyCode() == KeyEvent.VK_LEFT && !gg){
             moves++;
             left = true;
             // check if the right is not true, then keep the snake moving towrads the left direction.
@@ -282,7 +288,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
             up = false;
             down = false;
         }
-        if(e.getKeyCode() == KeyEvent.VK_UP){
+        if(e.getKeyCode() == KeyEvent.VK_UP && !gg){
             moves++;
             up = true;
             // check if the down is not true, then keep the snake moving towrads the up direction.
@@ -296,7 +302,7 @@ public class SnakePlay extends JPanel implements KeyListener, ActionListener {
             left = false;
             right = false;
         }
-        if(e.getKeyCode() == KeyEvent.VK_DOWN){
+        if(e.getKeyCode() == KeyEvent.VK_DOWN && !gg){
             moves++;
             down = true;
             // check if the up is not true, then keep the snake moving towrads the down direction.
